@@ -29,6 +29,7 @@ Available operations:
 - Move/rename files
 - Search for files
 - Get file metadata
+- Append to file
 
 Let me know what you'd like to do and I'll help guide you through it!
 """
@@ -149,6 +150,16 @@ class FilesystemManager:
             return results
         except Exception as e:
             logger.error(f"Error searching files from {start_path}: {e}")
+            raise
+        
+    async def append_to_file(self, path: str, content: str) -> None:
+        """Append content to a file"""
+        valid_path = self._validate_path(path)
+        try:
+            with open(valid_path, 'a', encoding='utf-8') as f:
+                f.write(content)
+        except Exception as e:
+            logger.error(f"Error appending to file {path}: {e}")
             raise
 
 async def main(allowed_dirs: List[str]):
@@ -318,6 +329,10 @@ async def main(allowed_dirs: List[str]):
             elif name == "get_file_info":
                 info = await fs.get_file_info(arguments["path"])
                 return [types.TextContent(type="text", text=str(info))]
+            
+            elif name == "append_to_file":
+                await fs.append_to_file(arguments["path"], arguments["content"])
+                return [types.TextContent(type="text", text=f"Successfully appended to {arguments['path']}")]
 
             else:
                 raise ValueError(f"Unknown tool: {name}")
