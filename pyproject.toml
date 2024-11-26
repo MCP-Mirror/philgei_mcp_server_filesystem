@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-server-filesystem"
+version = "0.5.1"
+description = "MCP server for filesystem access"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=0.9.1"
+]
+
+[project.scripts]
+mcp-server-filesystem = "mcp_server_filesystem:main"
+
+[tool.uv]
+dev-dependencies = [
+    "pyright>=1.1.389"
+]

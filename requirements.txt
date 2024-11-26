@@ -1,0 +1,15 @@
+# Core dependencies
+mcp
+pydantic
+typing-extensions
+
+# Async support
+asyncio
+
+# Development dependencies
+black
+isort
+mypy
+pytest
+pytest-asyncio
+pytest-cov
